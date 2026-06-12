@@ -64,7 +64,7 @@ export default function TeacherDashboard() {
         
         {/* HEADER */}
         <header className="border-b border-slate-800 pb-6">
-          <h1 className="text-3xl font-bold tracking-tight text-white">Director's Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-white">Director&apos;s Dashboard</h1>
           <p className="text-slate-400 mt-1">Manage your band roster, schedule practices, and distribute music sheets.</p>
         </header>
 
@@ -150,7 +150,7 @@ export default function TeacherDashboard() {
                   <input type="text" placeholder="e.g., Band Room B" className="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-medium mb-1">Director's Notes</label>
+                  <label className="block text-slate-400 font-medium mb-1">Director&apos;s Notes</label>
                   <textarea rows={2} placeholder="Focus elements..." className="w-full bg-slate-950 border border-slate-800 rounded p-2 text-slate-200 resize-none" />
                 </div>
                 <button type="button" onClick={() => alert("Notice Updated!")} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded text-sm transition">
