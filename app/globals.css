@@ -1,27 +1,153 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 2, 6, 23;
+  --background-mid-rgb: 8, 15, 31;
+  --background-end-rgb: 7, 11, 19;
+  --gold-glow: 255, 215, 0;
+  --blue-accent: 56, 189, 248;
 }
 
 body {
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background:
+    radial-gradient(circle at 18% 8%, rgba(var(--blue-accent), 0.24), transparent 22%),
+    radial-gradient(circle at 82% 8%, rgba(var(--gold-glow), 0.14), transparent 16%),
+    linear-gradient(180deg, rgb(var(--background-start-rgb)) 0%, rgb(var(--background-mid-rgb)) 45%, rgb(var(--background-end-rgb)) 100%);
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.06), transparent 12%),
+    radial-gradient(circle at 75% 8%, rgba(255, 255, 255, 0.04), transparent 14%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 40%);
+  opacity: 0.85;
+  z-index: -1;
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.35);
+  color: #fff;
+}
+
+.blob {
+  filter: blur(40px);
+  opacity: 0.9;
+}
+
+.animate-blob {
+  animation: blob 10s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -12px) scale(1.05);
+  }
+  66% {
+    transform: translate(-16px, 18px) scale(0.95);
+  }
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: reveal 0.8s ease forwards;
+}
+
+.reveal-card[style] {
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sidebar-card {
+  background: rgba(10, 18, 35, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-link {
+  transition: transform 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+}
+
+.sidebar-link:hover {
+  transform: translateX(4px);
+  color: #fff;
+  background-color: rgba(56, 189, 248, 0.12);
+}
+
+.active-section {
+  border-color: rgba(56, 189, 248, 0.9) !important;
+  background-color: rgba(56, 189, 248, 0.14) !important;
+  color: #fff !important;
+}
+
+.scroll-progress-outer {
+  max-width: min(100%, 1080px);
+}
+
+.scroll-progress-inner {
+  transition: width 0.2s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob {
+    animation: none;
+  }
+}
+
+.footer-glow {
+  position: relative;
+  overflow: hidden;
+  background: rgba(7, 15, 32, 0.82);
+  box-shadow: inset 0 0 120px rgba(56, 189, 248, 0.12);
+}
+
+.glass-surface {
+  background: rgba(12, 24, 44, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
+}
+
+.glow-border {
+  position: relative;
+  border-radius: 2rem;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.95), rgba(255, 215, 0, 0.85));
+}
+.glow-border > * {
+  border-radius: 1.75rem;
+  display: block;
 }
