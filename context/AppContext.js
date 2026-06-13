@@ -72,8 +72,9 @@ export function AppProvider({ children }) {
                                                                                                                                                                                                                                               );
                                                                                                                                                                                                                                               }
 
-                                                                                                                                                                                                                                              export const useApp = () => {  const context = useContext(AppContext);
-  
+                                                                                                                                                                                                                                              export const useApp = () => {
+  const context = useContext(AppContext);
+  // Returns an empty fallback object if context is missing during the build
   return context || {
     profile: null,
     playTrack: () => {},
@@ -81,5 +82,3 @@ export function AppProvider({ children }) {
     isPlaying: false
   };
 };
-
-                                                                                                                                                                                                                                              
