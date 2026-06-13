@@ -1,42 +1,42 @@
 import { NextResponse } from 'next/server';
 // @ts-ignore - Safely imports your existing JavaScript client file into TypeScript
-import { supabase } from '@/lib/supabase.js'; 
+import { supabase } from '../../../lib/supabase.js';
 
 export async function POST(request: Request) {
   try {
-    const { name, password } = await request.json();
+    const { name, password, role } = await request.json();
 
-    // 1. Query your live 'teachers' table for a matching row
-    const { data: teacher, error } = await supabase
-      .from('teachers')
+    if (!name || !password || !role) {
+      return NextResponse.json({ success: false, error: 'Request is missing required fields.' }, { status: 400 });
+    }
+
+    const tableName = role === 'teacher' ? 'teachers' : role === 'student' ? 'students' : null;
+    if (!tableName) {
+      return NextResponse.json({ success: false, error: 'Invalid role specified.' }, { status: 400 });
+    }
+
+    const { data: user, error } = await supabase
+      .from(tableName)
       .select('*')
       .eq('name', name)
       .eq('password', password)
-      .maybeSingle(); // Safely returns null if no user matches instead of crashing
+      .maybeSingle();
 
-    // 2. If an error happens or the credentials don't match anyone, deny access
-    if (error || !teacher) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid username or password' },
-        { status: 401 }
-      );
+    if (error || !user) {
+      return NextResponse.json({ success: false, error: 'Invalid username or password.' }, { status: 401 });
     }
 
-    // 3. Match found! Send the user details back to the login page UI
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       user: {
-        id: teacher.id,
-        name: teacher.name,
-        role: 'teacher'
-      }
+        id: user.id,
+        name: user.name,
+        role,
+      },
     });
-
   } catch (error) {
     console.error('Authentication error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: 'Internal server error.' }, { status: 500 });
   }
 }
+                                                                                                                                                                      
