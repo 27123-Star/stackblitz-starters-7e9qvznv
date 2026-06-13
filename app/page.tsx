@@ -7,14 +7,12 @@ const ROLE_CONFIG = {
   teacher: {
     label: "Teacher",
     placeholder: "Teacher name",
-    password: "teacher123",
     route: "/teacher",
     accent: "from-emerald-500 to-sky-500",
   },
   student: {
     label: "Student",
     placeholder: "Student name",
-    password: "student123",
     route: "/student",
     accent: "from-sky-500 to-purple-500",
   },
@@ -62,13 +60,22 @@ export default function Home() {
     setError("");
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selectedRole) return;
 
-    const expected = ROLE_CONFIG[selectedRole].password;
-    if (password !== expected) {
-      setError("Incorrect password. Please try again.");
+    setError("");
+
+    const response = await fetch("/api/authenticate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, password, role: selectedRole }),
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      setError(result.error || "Invalid name or password.");
       return;
     }
 
@@ -145,7 +152,7 @@ export default function Home() {
                 >
                   <span className="d-block text-xs uppercase tracking-[0.35em] text-slate-400">{config.label}</span>
                   <span className="mt-3 d-block text-2xl font-black text-white">Go to {config.label}</span>
-                  <span className="mt-4 d-block max-w-sm text-sm text-slate-400">Password: <span className="text-slate-200">{config.password}</span></span>
+                  <span className="mt-4 d-block max-w-sm text-sm text-slate-400">Use the password from the teacher sheet or student instructions.</span>
                 </button>
               ))}
             </div>
