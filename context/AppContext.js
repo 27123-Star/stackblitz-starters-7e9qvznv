@@ -72,5 +72,14 @@ export function AppProvider({ children }) {
                                                                                                                                                                                                                                               );
                                                                                                                                                                                                                                               }
 
-                                                                                                                                                                                                                                              export const useApp = () => useContext(AppContext);
+                                                                                                                                                                                                                                              export const useApp = () => {  const context = useContext(AppContext);
+  
+  return context || {
+    profile: null,
+    playTrack: () => {},
+    currentTrack: null,
+    isPlaying: false
+  };
+};
+
                                                                                                                                                                                                                                               
