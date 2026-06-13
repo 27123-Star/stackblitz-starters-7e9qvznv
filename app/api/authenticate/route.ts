@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // @ts-ignore - Safely imports your existing JavaScript client file into TypeScript
-import { supabase } from '../../../../lib/supabase.js'; 
+import { supabase } from '@/lib/supabase.js'; 
 
 export async function POST(request: Request) {
   try {
