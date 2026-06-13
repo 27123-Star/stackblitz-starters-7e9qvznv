@@ -4,7 +4,9 @@ import { supabase } from "@/lib/supabase";
 import { useApp } from "@/context/AppContext";
 
 export default function StudentDashboard() {
-  const { profile, playTrack, currentTrack, isPlaying } = useApp();
+const appContext = useApp();
+const { profile, playTrack, currentTrack, isPlaying } = appContext || {};
+
     const [activeTab, setActiveTab] = useState("home");
       const [tunes, setTunes] = useState([]);
         const [practices, setPractices] = useState([]);
