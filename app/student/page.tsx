@@ -1,40 +1,127 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import { useApp } from "@/context/AppContext";
 
 export default function StudentPage() {
   const searchParams = useSearchParams();
-  const name = searchParams.get("name") || "Student";
+  const URLName = searchParams.get("name") || "Student";
+
+  // Safe extraction helper so Vercel builds cleanly
+  const appContext = useApp();
+  const { profile, playTrack, currentTrack, isPlaying } = appContext || {};
+
+  const [activeTab, setActiveTab] = useState("home");
+  const [tunes, setTunes] = useState([]);
+  const [practices, setPractices] = useState([]);
+
+  useEffect(() => {
+    if (profile) {
+      fetchData();
+    }
+  }, [profile]);
+
+  async function fetchData() {
+    const { data: tunesData } = await supabase.from("tunes").select("*");
+    const { data: practicesData } = await supabase.from("practices").select("*");
+    setTunes(tunesData || []);
+    setPractices(practicesData || []);
+  }
+
+  // Fallback state if the user profile hasn't finished loading yet
+  if (!profile) {
+    return (
+      <main className="min-h-screen bg-slate-950 text-slate-100 p-6 flex items-center justify-center">
+        <p className="text-slate-400 font-medium animate-pulse">Syncing profile matrix for {URLName}...</p>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6">
-      <div className="mx-auto max-w-4xl space-y-8">
-        <section className="rounded-[2rem] border border-slate-800 bg-slate-900/95 p-10 shadow-2xl shadow-black/20">
-          <span className="inline-flex rounded-full bg-sky-500/15 px-3 py-1 text-sm font-semibold uppercase tracking-[0.25em] text-sky-300">
-            Student Portal
-          </span>
-          <h1 className="mt-6 text-4xl font-black tracking-tight text-white">
-            Welcome, {name}
-          </h1>
-          <p className="mt-4 max-w-2xl text-slate-400 leading-7">
-            You have been routed to the student portal. This page is your starting point for learning materials, assignments, and personal progress.
-          </p>
-        </section>
+      <div className="mx-auto max-w-4xl space-y-6">
+        
+        {/* Tab Navigation Bar */}
+        <nav className="flex space-x-2 bg-slate-900 p-2 rounded-xl border border-slate-800">
+          {["home", "tunes", "practices"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 capitalize rounded-lg transition font-semibold ${
+                activeTab === tab ? "bg-emerald-500 text-slate-950" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </nav>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-[2rem] border border-slate-800 bg-slate-900 p-8">
-            <h2 className="text-2xl font-semibold text-white">Assignments</h2>
-            <p className="mt-3 text-slate-400">
-              View your assigned tasks and practice exercises after login.
-            </p>
-          </div>
-          <div className="rounded-[2rem] border border-slate-800 bg-slate-900 p-8">
-            <h2 className="text-2xl font-semibold text-white">Practice Dashboard</h2>
-            <p className="mt-3 text-slate-400">
-              Track your progress, submit practice notes, and access resources here.
-            </p>
-          </div>
+        {/* Dynamic Scoped Tab Content Views */}
+        <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 min-h-[300px]">
+          {activeTab === "home" && (
+            <div className="flex items-center space-x-6">
+              <div className="w-24 h-24 bg-gradient-to-tr from-emerald-500 to-blue-600 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                🎷
+              </div>
+              <div>
+                <h2 className="text-3xl font-extrabold">{profile.full_name || URLName}</h2>
+                <p className="text-slate-400 text-lg mt-1">
+                  Instrument Assigned: <span className="text-white font-medium">{profile.instrument || "Not Assigned"}</span>
+                </p>
+                <span className={`inline-block mt-3 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                  profile.status === 'member' 
+                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
+                    : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                }`}>
+                  {profile.status || "Pending"}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "tunes" && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-slate-300 mb-2">Cloud Audio Repository</h3>
+              {tunes.length === 0 ? (
+                <p className="text-slate-500">No tunes pushed by the teacher yet.</p>
+              ) : (
+                tunes.map((tune) => (
+                  <div key={tune.id} className="p-4 bg-slate-950 border border-slate-800 rounded-xl flex justify-between items-center">
+                    <span className="font-semibold text-slate-200">{tune.title}</span>
+                    <button
+                      onClick={() => playTrack && playTrack(tune)}
+                      className={`px-4 py-1.5 rounded-lg text-sm font-bold transition ${
+                        currentTrack?.id === tune.id && isPlaying 
+                          ? "bg-red-500 text-white" 
+                          : "bg-emerald-500 text-slate-950 hover:scale-105"
+                      }`}
+                    >
+                      {currentTrack?.id === tune.id && isPlaying ? "Pause Track" : "Stream Tune"}
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === "practices" && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-slate-300">Upcoming Rehearsal Logs</h3>
+              {practices.length === 0 ? (
+                <p className="text-slate-500">No rehearsals logged by the director.</p>
+              ) : (
+                practices.map((p) => (
+                  <div key={p.id} className="p-4 bg-slate-950 border border-slate-800 rounded-xl">
+                    <p className="text-emerald-400 font-mono font-bold">{p.practice_date}</p>
+                    <p className="text-slate-300 mt-1">{p.notes}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
         </div>
+
       </div>
     </main>
   );
