@@ -1,10 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function TeacherPage() {
-  const searchParams = useSearchParams();
-  const name = searchParams.get("name") || "Teacher";
+  const [name, setName] = useState("Teacher");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setName(new URLSearchParams(window.location.search).get("name") || "Teacher");
+    }
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6">

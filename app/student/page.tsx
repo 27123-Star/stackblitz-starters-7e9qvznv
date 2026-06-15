@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useApp } from "@/context/AppContext";
 
@@ -17,8 +16,7 @@ type PracticeRecord = {
 };
 
 export default function StudentPage() {
-  const searchParams = useSearchParams();
-  const URLName = searchParams.get("name") || "Student";
+  const [URLName, setURLName] = useState("Student");
 
   // Safe extraction helper so Vercel builds cleanly
   const appContext = useApp();
@@ -27,6 +25,12 @@ export default function StudentPage() {
   const [activeTab, setActiveTab] = useState("home");
   const [tunes, setTunes] = useState<TuneRecord[]>([]);
   const [practices, setPractices] = useState<PracticeRecord[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setURLName(new URLSearchParams(window.location.search).get("name") || "Student");
+    }
+  }, []);
 
   useEffect(() => {
     if (profile) {
