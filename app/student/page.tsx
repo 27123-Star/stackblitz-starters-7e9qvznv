@@ -4,6 +4,18 @@ import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useApp } from "@/context/AppContext";
 
+type TuneRecord = {
+  id: string;
+  title: string;
+  audio_url?: string;
+};
+
+type PracticeRecord = {
+  id: string;
+  practice_date: string;
+  notes: string;
+};
+
 export default function StudentPage() {
   const searchParams = useSearchParams();
   const URLName = searchParams.get("name") || "Student";
@@ -13,8 +25,8 @@ export default function StudentPage() {
   const { profile, playTrack, currentTrack, isPlaying } = appContext || {};
 
   const [activeTab, setActiveTab] = useState("home");
-  const [tunes, setTunes] = useState([]);
-  const [practices, setPractices] = useState([]);
+  const [tunes, setTunes] = useState<TuneRecord[]>([]);
+  const [practices, setPractices] = useState<PracticeRecord[]>([]);
 
   useEffect(() => {
     if (profile) {
@@ -25,8 +37,8 @@ export default function StudentPage() {
   async function fetchData() {
     const { data: tunesData } = await supabase.from("tunes").select("*");
     const { data: practicesData } = await supabase.from("practices").select("*");
-    setTunes(tunesData || []);
-    setPractices(practicesData || []);
+    setTunes((tunesData as TuneRecord[]) || []);
+    setPractices((practicesData as PracticeRecord[]) || []);
   }
 
   // Fallback state if the user profile hasn't finished loading yet
