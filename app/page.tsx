@@ -88,8 +88,8 @@ export default function Home() {
       <div className="scroll-progress-outer fixed left-0 right-0 top-20 z-50 mx-auto hidden h-1 overflow-hidden rounded-full bg-white/10 lg:block">
         <div className="scroll-progress-inner h-1 rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-amber-300" style={{ width: `${scrollProgress}%` }} />
       </div>
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_240px]">
-        <div className="space-y-10">
+      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_300px]">
+        <div className="space-y-8">
           <div className="lg:hidden">
             <button
               onClick={() => setMobileNavOpen((open) => !open)}
@@ -103,40 +103,46 @@ export default function Home() {
               <a href="#login" className={`sidebar-link d-block btn btn-sm btn-outline-light text-start ${selectedRole ? "" : "disabled opacity-50"} ${activeSection === "login" ? "active-section" : ""}`}>Login panel</a>
             </div>
           </div>
-          <section id="hero" className="glass-surface rounded-[2rem] p-10 overflow-hidden relative reveal-card" style={{ "--delay": "0s" } as CSSProperties}>
-            <span className="blob absolute -left-10 top-8 h-40 w-40 rounded-full bg-sky-500/20 animate-blob" />
-            <span className="blob absolute -right-10 top-20 h-52 w-52 rounded-full bg-yellow-400/15 animate-blob animation-delay-2000" />
-            <span className="blob absolute -right-16 -bottom-16 h-64 w-64 rounded-full bg-white/10 animate-blob animation-delay-4000" />
-            <div className="position-relative z-10">
-              <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Welcome to the portal</p>
-              <h1 className="mt-4 text-5xl font-black text-white">Luxury teacher and student access</h1>
-              <p className="mt-3 max-w-2xl leading-7 text-slate-300">
-                Enter the right portal with a seamless flow, premium gradient styling, and elegant Bootstrap navigation.
-              </p>
-              <div className="row g-3 mt-8">
-                <div className="col-md-6">
-                  <div className="glass-surface rounded-4 p-4 border border-slate-800">
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Fast flow</p>
-                    <h2 className="mt-2 text-xl font-bold text-white">Quick choice</h2>
-                    <p className="mt-2 text-slate-400">Select teacher or student, authenticate, and arrive instantly in your portal.</p>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="glass-surface rounded-4 p-4 border border-slate-800">
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Ambient UI</p>
-                    <h2 className="mt-2 text-xl font-bold text-white">Blue gold elegance</h2>
-                    <p className="mt-2 text-slate-400">Glassy cards, soft glows, and animated light blobs keep the interface fresh.</p>
-                  </div>
+          <section id="hero" className="glass-surface relative overflow-hidden rounded-[32px] p-8 md:p-10 reveal-card" style={{ "--delay": "0s" } as CSSProperties}>
+            <span className="blob absolute -left-8 top-8 h-40 w-40 rounded-full bg-sky-400/20" />
+            <span className="blob absolute right-8 top-6 h-48 w-48 rounded-full bg-amber-300/12" />
+            <span className="blob absolute bottom-0 right-1/4 h-56 w-56 rounded-full bg-white/8" />
+            <div className="relative z-10 grid gap-8 xl:grid-cols-[1.1fr_0.9fr] xl:items-end">
+              <div>
+                <p className="text-[0.72rem] uppercase tracking-[0.35em] text-sky-100/80">Welcome to the portal</p>
+                <h1 className="mt-4 max-w-2xl text-4xl font-black tracking-tight text-white md:text-5xl">Luxury teacher and student access</h1>
+                <p className="mt-4 max-w-xl text-base leading-7 text-slate-300 md:text-lg">
+                  A refined gateway for teachers and students, combining a calm dashboard, premium glass surfaces, and seamless portal routing.
+                </p>
+              </div>
+              <div className="glass-surface rounded-[24px] p-5">
+                <p className="text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">Live overview</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-200">
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-3">Fast flow • one tap to choose your role and enter.</div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-3">Ambient UI • soft blue and gold glows with polished glass.</div>
+                  <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-3">Sticky navigation • quick access to the full portal journey.</div>
                 </div>
               </div>
             </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <article className="portal-card rounded-[24px] p-5">
+                <p className="text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">Fast flow</p>
+                <h2 className="mt-2 text-xl font-semibold text-white">Choose, confirm, continue</h2>
+                <p className="mt-2 text-slate-300">A clean role selection experience that guides every visitor toward the right destination in seconds.</p>
+              </article>
+              <article className="portal-card rounded-[24px] p-5">
+                <p className="text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">Ambient UI</p>
+                <h2 className="mt-2 text-xl font-semibold text-white">Soft blue-gold glow</h2>
+                <p className="mt-2 text-slate-300">Subtle gradients, blur, and layered depth make the interface feel premium and cohesive.</p>
+              </article>
+            </div>
           </section>
 
-          <section id="portal" className="glass-surface rounded-[2rem] p-10 reveal-card" style={{ "--delay": "0.2s" } as CSSProperties}>
-            <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Choose your portal</p>
-            <h2 className="mt-4 text-4xl font-black text-white">Enter as a teacher or student</h2>
-            <p className="mt-3 max-w-2xl leading-7 text-slate-300">
-              Choose your role, enter your name and password, and you’ll be routed straight into the right portal.
+          <section id="portal" className="glass-surface rounded-[32px] p-8 md:p-10 reveal-card" style={{ "--delay": "0.2s" } as CSSProperties}>
+            <p className="text-[0.72rem] uppercase tracking-[0.35em] text-slate-300/80">Choose your portal</p>
+            <h2 className="mt-4 text-3xl font-black text-white md:text-4xl">Enter as a teacher or student</h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300">
+              Choose your role, enter your credentials, and you’ll be routed into the correct workspace with a polished, premium flow.
             </p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {Object.entries(ROLE_CONFIG).map(([role, config]) => (
@@ -144,22 +150,20 @@ export default function Home() {
                   key={role}
                   type="button"
                   onClick={() => handleRoleSelect(role as "teacher" | "student")}
-                  className={`btn btn-outline-light w-full rounded-4 text-start p-4 shadow-sm transition ${
-                    selectedRole === role
-                      ? "active btn-light text-slate-950"
-                      : "text-slate-100 bg-slate-950/90 border-slate-700 hover:border-sky-400 hover:bg-slate-900"
+                  className={`portal-card w-full rounded-[24px] p-5 text-start transition ${
+                    selectedRole === role ? "active-card" : ""
                   }`}
                 >
-                  <span className="d-block text-xs uppercase tracking-[0.35em] text-slate-400">{config.label}</span>
+                  <span className="d-block text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">{config.label}</span>
                   <span className="mt-3 d-block text-2xl font-black text-white">Go to {config.label}</span>
-                  <span className="mt-4 d-block max-w-sm text-sm text-slate-400">Use the password from the teacher sheet or student instructions.</span>
+                  <span className="mt-4 d-block max-w-sm text-sm text-slate-300">Use the password from the teacher sheet or student instructions to continue.</span>
                 </button>
               ))}
             </div>
           </section>
 
           {selectedRole ? (
-            <section id="login" className="glass-surface rounded-[2rem] p-10 reveal-card" style={{ "--delay": "0.4s" } as CSSProperties}>
+            <section id="login" className="glass-surface rounded-[32px] p-8 md:p-10 reveal-card" style={{ "--delay": "0.4s" } as CSSProperties}>
               <h2 className="text-3xl font-bold text-white">{ROLE_CONFIG[selectedRole].label} login</h2>
               <p className="mt-2 text-slate-400">Please enter your name and password to continue to the {ROLE_CONFIG[selectedRole].label.toLowerCase()} portal.</p>
 
@@ -209,16 +213,16 @@ export default function Home() {
         </div>
 
         <aside className="hidden lg:block">
-          <div className="sidebar-card glass-surface sticky top-24 p-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Section links</p>
-            <nav className="sidebar-nav mt-4 d-flex flex-column gap-2">
-              <a href="#hero" className={`sidebar-link btn btn-sm btn-outline-light text-start ${activeSection === "hero" ? "active-section" : ""}`}>Hero overview</a>
-              <a href="#portal" className={`sidebar-link btn btn-sm btn-outline-light text-start ${activeSection === "portal" ? "active-section" : ""}`}>Portal selection</a>
-              <a href="#login" className={`sidebar-link btn btn-sm btn-outline-light text-start ${selectedRole ? "" : "opacity-50 pointer-events-none"} ${activeSection === "login" ? "active-section" : ""}`}>Login panel</a>
+          <div className="glass-surface sticky top-24 rounded-[28px] p-5">
+            <p className="text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">Quick nav</p>
+            <nav className="mt-4 flex flex-col gap-2">
+              <a href="#hero" className={`sidebar-link rounded-2xl border border-white/10 bg-slate-950/70 px-3 py-2 text-sm text-slate-200 ${activeSection === "hero" ? "active-section" : ""}`}>Hero overview</a>
+              <a href="#portal" className={`sidebar-link rounded-2xl border border-white/10 bg-slate-950/70 px-3 py-2 text-sm text-slate-200 ${activeSection === "portal" ? "active-section" : ""}`}>Portal selection</a>
+              <a href="#login" className={`sidebar-link rounded-2xl border border-white/10 bg-slate-950/70 px-3 py-2 text-sm text-slate-200 ${selectedRole ? "" : "opacity-50 pointer-events-none"} ${activeSection === "login" ? "active-section" : ""}`}>Login panel</a>
             </nav>
-            <div className="mt-5 rounded-4 border border-slate-800 bg-slate-950/80 p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Tip</p>
-              <p className="mt-2 text-slate-300 text-sm">Select a portal to unlock the login section and use the side menu for quick navigation.</p>
+            <div className="mt-5 rounded-[24px] border border-white/10 bg-slate-950/75 p-4 shadow-inner shadow-slate-950/40">
+              <p className="text-[0.68rem] uppercase tracking-[0.35em] text-slate-300/80">Tip</p>
+              <p className="mt-2 text-sm text-slate-300">Choose a portal to reveal the login panel and keep your path clear with persistent sub-navigation.</p>
             </div>
           </div>
         </aside>

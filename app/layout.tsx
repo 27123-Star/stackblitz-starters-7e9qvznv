@@ -9,23 +9,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
         <AppProvider>
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.20),transparent_22%),radial-gradient(circle_at_top_right,_rgba(255,215,0,0.14),transparent_18%)]" />
+          <div className="ambient-shell" aria-hidden="true" />
           <div className="relative z-10">
-            <header className="container-fluid py-4">
-              <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
-                <div>
-                  <Link href="/" className="navbar-brand fs-4 fw-bold text-white tracking-[0.2em]">Al Jamea Portal</Link>
-                  <p className="mb-0 text-slate-400">Teacher & student access with elegant navigation.</p>
+            <header className="mx-auto w-full max-w-7xl px-4 pt-4 md:px-6 lg:px-8">
+              <div className="glass-surface rounded-[28px] px-5 py-4 shadow-2xl shadow-slate-950/40">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <p className="text-[0.68rem] uppercase tracking-[0.35em] text-sky-200/75">Al Jamea Portal</p>
+                    <Link href="/" className="mt-1 block text-2xl font-black tracking-[0.18em] text-white hover:text-sky-100">Al Jamea Portal</Link>
+                    <p className="mt-1 text-sm text-slate-300">Luxury teacher and student access with an elegant, unified dashboard.</p>
+                  </div>
+                  <nav className="flex flex-wrap items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 p-1.5 shadow-inner shadow-slate-950/30">
+                    <Link href="/" className="nav-pill rounded-full bg-sky-400/15 text-sky-100">Home</Link>
+                    <Link href="/teacher" className="nav-pill rounded-full text-slate-200 hover:bg-sky-400/10 hover:text-white">Teacher</Link>
+                    <Link href="/student" className="nav-pill rounded-full text-slate-200 hover:bg-amber-400/10 hover:text-amber-100">Student</Link>
+                  </nav>
                 </div>
-                <nav className="d-flex flex-wrap gap-2">
-                  <Link href="/" className="btn btn-outline-light btn-sm">Home</Link>
-                  <Link href="/teacher" className="btn btn-outline-info btn-sm">Teacher</Link>
-                  <Link href="/student" className="btn btn-outline-warning btn-sm text-white">Student</Link>
-                </nav>
               </div>
             </header>
 
-            <main className="p-6 max-w-6xl mx-auto pb-32">{children}</main>
+            <main className="mx-auto w-full max-w-7xl px-4 pb-32 pt-6 md:px-6 lg:px-8">{children}</main>
             <footer className="footer-glow mt-10 rounded-4 border border-white/10 bg-slate-950/75 p-5 text-center text-slate-300 shadow-xl shadow-slate-950/20">
               <div className="container">
                 <p className="mb-2 text-muted">Built for teachers and students with premium portal access.</p>
